@@ -42,11 +42,11 @@ plugins/hc-agent-skills/
 ├── .codex-plugin/plugin.json             Codex package metadata
 ├── .claude-plugin/plugin.json            Claude Code package metadata
 └── skills/                               Canonical portable skills
-harness/
-└── maintain-agent-skills.md              Project-only harness fixture
+docs/
+└── maintain-agent-skills.md              Maintenance documentation
 ```
 
-Published skills use `SKILL.md` under `plugins/hc-agent-skills/skills/`. Harness fixtures use other filenames so skill installers ignore them.
+Published skills use `SKILL.md` under `plugins/hc-agent-skills/skills/`. See [Maintaining Agent Skills](docs/maintain-agent-skills.md) for the repository workflow.
 
 ## Validate
 
