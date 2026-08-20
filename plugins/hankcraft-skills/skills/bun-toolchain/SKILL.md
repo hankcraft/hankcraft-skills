@@ -1,13 +1,9 @@
 ---
 name: bun-toolchain
 description: >
-  Modern, production-ready practices for building TypeScript projects with Bun plus the Oxc toolchain
-  (oxlint, oxfmt) and Lefthook git hooks. Use this skill whenever the user is working with Bun + TypeScript
-  AND any of: oxlint, oxfmt, lefthook, .oxlintrc.json, lefthook.yml, pre-commit hooks, fast Rust-based
-  linting/formatting, or setting up a new Bun project that needs lint/format/hooks wired up. Prefer this
-  skill over plain bun-typescript whenever oxlint, oxfmt, or lefthook appear in the project (devDependencies,
-  config files, or scripts), even if the user doesn't mention them explicitly. Covers monorepos, catalogs,
-  bun:test, Bun.serve(), tsconfig, bunfig.toml, and the full lint/format/hook integration.
+  Build and maintain Bun + TypeScript projects with oxlint, oxfmt, and Lefthook. Use for Bun setup,
+  monorepos, bun:test, Bun.serve(), tsconfig, bunfig.toml, linting, formatting, or git hooks. Prefer this
+  skill when oxlint, oxfmt, Lefthook, .oxlintrc.json, or lefthook.yml appears.
 ---
 
 # Bun Toolchain
