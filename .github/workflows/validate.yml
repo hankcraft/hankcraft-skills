@@ -16,7 +16,7 @@ jobs:
       - uses: astral-sh/setup-uv@v6
       - name: Validate skills
         run: |
-          find plugins harness -name SKILL.md -print0 |
+          find plugins -name SKILL.md -print0 |
             xargs -0 -n1 uvx --from skills-ref==0.1.0 agentskills validate
       - name: Validate JSON manifests
         run: |

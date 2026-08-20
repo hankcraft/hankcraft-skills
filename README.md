@@ -7,10 +7,7 @@ Portable Agent Skills with native Codex and Claude Code plugin packaging.
 Install the shared skill into Codex, Claude Code, Antigravity, or another supported client:
 
 ```bash
-npx skills add https://github.com/hankcraft/hc-agent-skills/tree/main/plugins/hc-agent-skills \
-  --skill hono-api-development \
-  --agent '*' \
-  --global
+npx skills add hankcraft/hc-agent-skills
 ```
 
 Install the native Codex plugin:
@@ -46,10 +43,10 @@ plugins/hc-agent-skills/
 ├── .claude-plugin/plugin.json            Claude Code package metadata
 └── skills/                               Canonical portable skills
 harness/
-└── skills/                               Project-only skill fixtures
+└── maintain-agent-skills.md              Project-only harness fixture
 ```
 
-Published skills live under `plugins/hc-agent-skills/skills/`. Project-only harness skills live under `harness/skills/` and are excluded by the scoped install URL above.
+Published skills use `SKILL.md` under `plugins/hc-agent-skills/skills/`. Harness fixtures use other filenames so skill installers ignore them.
 
 ## Validate
 
