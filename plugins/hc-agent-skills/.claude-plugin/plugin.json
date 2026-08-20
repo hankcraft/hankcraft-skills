@@ -1,7 +1,7 @@
 {
   "name": "hc-agent-skills",
   "version": "0.1.0",
-  "description": "Portable skills for building HTTP APIs.",
+  "description": "Portable skills for Hono APIs and Bun TypeScript projects.",
   "author": {
     "name": "hank"
   },

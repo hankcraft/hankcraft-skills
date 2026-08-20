@@ -1,7 +1,7 @@
 {
   "name": "hc-agent-skills",
-  "version": "0.1.0",
-  "description": "Portable skills for building HTTP APIs.",
+  "version": "0.1.0+codex.20260820052504",
+  "description": "Portable skills for Hono APIs and Bun TypeScript projects.",
   "author": {
     "name": "hank"
   },
@@ -9,15 +9,15 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "HC Agent Skills",
-    "shortDescription": "Develop Hono APIs.",
-    "longDescription": "Build and modify Hono APIs with focused validation and request-level tests.",
+    "shortDescription": "Develop Hono and Bun projects.",
+    "longDescription": "Build Hono APIs and Bun TypeScript projects with focused testing, Oxc tooling, and Git hooks.",
     "developerName": "hank",
     "category": "Productivity",
     "capabilities": [
       "Write"
     ],
     "defaultPrompt": [
-      "Help me develop this Hono API."
+      "Help me develop this Hono or Bun TypeScript project."
     ]
   }
 }

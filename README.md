@@ -4,7 +4,7 @@ Portable Agent Skills with native Codex and Claude Code plugin packaging.
 
 ## Install
 
-Install the shared skill into Codex, Claude Code, Antigravity, or another supported client:
+Install the shared skills into Codex, Claude Code, Antigravity, or another supported client:
 
 ```bash
 npx skills add hankcraft/hc-agent-skills
@@ -48,11 +48,18 @@ docs/
 
 Published skills use `SKILL.md` under `plugins/hc-agent-skills/skills/`. See [Maintaining Agent Skills](docs/maintain-agent-skills.md) for the repository workflow.
 
+## Included skills
+
+- `hono-api-development` — Build and maintain production Hono APIs.
+- `bun-typescript-oxc` — Configure Bun TypeScript projects with Oxlint, Oxfmt, and Lefthook.
+
 ## Validate
 
 ```bash
 uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hc-agent-skills/skills/hono-api-development
+uvx --from skills-ref==0.1.0 agentskills validate \
+  plugins/hc-agent-skills/skills/bun-typescript-oxc
 claude plugin validate .
 ```
 
