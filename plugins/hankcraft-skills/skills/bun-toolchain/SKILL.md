@@ -46,7 +46,7 @@ When a Hono skill also applies, this skill owns Bun package management, workspac
 
 ### Composition with System Design
 
-Do not require system-design artifacts for routine Bun tooling work. When the user asks to design and implement a system, let `system-design-skills` define containers, responsibilities, and external dependencies first. Map deployable containers to applications/workspaces, preserve those boundaries during setup, and return architectural changes to that workflow instead of silently changing the model.
+Do not require system-design artifacts for routine Bun tooling work. When the user asks to design and implement a system, let `system-design` define containers, responsibilities, and external dependencies first. Map deployable containers to applications/workspaces, preserve those boundaries during setup, and return architectural changes to that workflow instead of silently changing the model.
 
 ---
 

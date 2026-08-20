@@ -1,9 +1,9 @@
 ---
-name: system-design-skills
+name: system-design
 description: Router for system design work. Use when designing a system, architecting a service, clarifying actors/containers/components, or producing C4/LikeC4 diagrams. Two routes only — markdown-first elicitation, then concrete `.c4` source.
 ---
 
-# System Design Skills
+# System Design
 
 Two-route bundle. Clarify the architecture in plain markdown first, then turn it into concrete `.c4` source. No middle layer and no implementation framework required.
 
@@ -11,12 +11,12 @@ Two-route bundle. Clarify the architecture in plain markdown first, then turn it
 
 | Situation | Load |
 | --- | --- |
-| Need to clarify a system: identify actors, decide containers, pick components, write it down with ASCII diagrams | `c4-abstractions/SKILL.md` |
+| Need to clarify a system: identify actors, decide containers, pick components, write it down with ASCII diagrams | `c4-modeling/SKILL.md` |
 | Have a structured C4 description (markdown + element/relationship tables) and need `.c4` / `.likec4` source plus views | `likec4/SKILL.md` |
 
 ## Default flow
 
-1. Enter at `c4-abstractions` for any "design me…", "what does the architecture look like", "what containers should I have" prompt.
+1. Enter at `c4-modeling` for any "design me…", "what does the architecture look like", "what containers should I have" prompt.
 2. Walk the three C4 gates (Context → Container → Component). Produce a single `c4-model.md`.
 3. Hand off to `likec4`. Generate `.c4` source from the markdown using the handoff mapping in `likec4/SKILL.md`.
 
@@ -33,7 +33,7 @@ Exactly one artifact crosses the boundary: `c4-model.md` with four sections.
 - **Components** — per-container ASCII zoom-in, optional.
 - **Element Registry + Relationships** — two tables. Element table: `id | kind | parent | label | technology | description`. Relationship table: `source | target | label | technology`.
 
-Schema and ASCII conventions defined in `c4-abstractions/templates/c4-model.md`. `likec4` reads this contract to produce `.c4` source mechanically.
+Schema and ASCII conventions defined in `c4-modeling/templates/c4-model.md`. `likec4` reads this contract to produce `.c4` source mechanically.
 
 ## Done bar
 

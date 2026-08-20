@@ -1,4 +1,4 @@
-// Example LikeC4 model produced from a `c4-abstractions` handoff (`c4-model.md`).
+// Example LikeC4 model produced from a `c4-modeling` handoff (`c4-model.md`).
 // Case: B2B webhook delivery platform, startup scale.
 // Critical flow: accept event -> persist durably -> deliver with bounded retries.
 // In a real project, split `specification` into its own spec.c4 file.

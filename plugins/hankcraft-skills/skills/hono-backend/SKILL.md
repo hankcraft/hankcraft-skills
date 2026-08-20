@@ -23,7 +23,7 @@ When a Bun toolchain skill also applies, inherit its package-manager, workspace,
 
 ### Composition with System Design
 
-Do not require system-design artifacts for routine Hono work. When the user asks to design and implement a system, let `system-design-skills` define the API container, component responsibilities, and external relationships first. Implement those responsibilities with Hono routes and modules without silently adding containers or external dependencies; return architectural changes to the system-design workflow.
+Do not require system-design artifacts for routine Hono work. When the user asks to design and implement a system, let `system-design` define the API container, component responsibilities, and external relationships first. Implement those responsibilities with Hono routes and modules without silently adding containers or external dependencies; return architectural changes to the system-design workflow.
 
 Read only the references relevant to the request:
 

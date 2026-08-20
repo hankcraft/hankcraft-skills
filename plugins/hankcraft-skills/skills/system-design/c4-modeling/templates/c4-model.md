@@ -1,6 +1,6 @@
 # C4 Model — <system name>
 
-> Markdown handoff produced by the `c4-abstractions` skill. Consumed by the `likec4` skill to emit `.c4` source.
+> Markdown handoff produced by the `c4-modeling` skill. Consumed by the `likec4` skill to emit `.c4` source.
 > Fill every section. The Element Registry and Relationships tables are the source of truth; ASCII diagrams must match them.
 
 ---

@@ -81,9 +81,9 @@ Compact ambiguity rule:
 5. Views (diagrams) are defined in `views { ... }` block. See Views section below.
 6. After editing LikeC4 files, validate with the CLI
 
-## Consuming a `c4-abstractions` handoff
+## Consuming a `c4-modeling` handoff
 
-This skill's primary input is the `c4-model.md` produced by the `c4-abstractions` skill. That file holds prose + ASCII for C4 Context / Containers / Components, plus two tables (Element Registry, Relationships) that are the source of truth for FQNs and labels.
+This skill's primary input is the `c4-model.md` produced by the `c4-modeling` skill. That file holds prose + ASCII for C4 Context / Containers / Components, plus two tables (Element Registry, Relationships) that are the source of truth for FQNs and labels.
 
 Continue from that handoff automatically as part of the parent system-design workflow. A separate user invocation is not required.
 
@@ -127,7 +127,7 @@ Map each section of `c4-model.md` mechanically. Trust the tables, not the ASCII.
 - `view context { include <system>; include -> <system> -> }` — collapsed system + its neighbours (drives from System Context).
 - `view containers of <system> { include * }` — drives from Containers section.
 - `view <containerId> of <containerId> { include * }` — one per non-skipped Components section.
-- Add `dynamic view` and `deployment view` only when the user explicitly asks; the `c4-abstractions` handoff does **not** include those.
+- Add `dynamic view` and `deployment view` only when the user explicitly asks; the `c4-modeling` handoff does **not** include those.
 
 ### Done bar
 

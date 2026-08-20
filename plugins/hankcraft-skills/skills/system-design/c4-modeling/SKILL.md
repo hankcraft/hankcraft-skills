@@ -1,9 +1,9 @@
 ---
-name: c4-abstractions
-description: Interactive C4-model elicitation. Use when a user asks to design a system, draw a C4 diagram, clarify architecture, decide containers, identify actors, or describe a system before any code. Produces a single markdown file (`c4-model.md`) with prose + ASCII diagrams for C4 Context, Container, and Component levels, plus an element registry and relationships table. No DSL, no code — the `likec4` skill consumes this markdown afterward.
+name: c4-modeling
+description: Model C4 system context, containers, and components in markdown. Use when the user explicitly asks for C4 modeling or when the system-design skill needs its modeling stage. Produces `c4-model.md`; does not write application code or LikeC4 DSL.
 ---
 
-# C4 Abstractions
+# C4 Modeling
 
 Elicit a C4 model in plain markdown. Three gates. ASCII diagrams. No code. Output feeds the `likec4` skill.
 
@@ -149,8 +149,8 @@ Rules:
 When all three gates are done and the registry + relationships tables are complete:
 
 1. Resolve any material ambiguity with the user. Skip a separate confirmation when the prompt and repository already make the design clear.
-2. Continue directly to the `likec4` skill with `c4-model.md` as input. The `likec4` skill maps each markdown section + table row to LikeC4 DSL blocks and emits `.c4` source.
-3. Stop after markdown only when the user explicitly requests that checkpoint.
+2. When loaded by `system-design`, continue directly to `likec4` with `c4-model.md` as input.
+3. When invoked directly, stop at `c4-model.md` unless the user also requests LikeC4 output.
 
 Worked end-to-end example lives in `templates/c4-model.md`. Copy it as the starting point for a new design.
 
