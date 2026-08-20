@@ -1,0 +1,22 @@
+{
+  "name": "hc-agent-skills",
+  "version": "0.1.0",
+  "description": "Portable workflows for maintaining and evaluating agent skills.",
+  "author": {
+    "name": "hank"
+  },
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "HC Agent Skills",
+    "shortDescription": "Maintain portable agent skills.",
+    "longDescription": "Create, validate, publish, and update reusable agent skills across compatible CLIs.",
+    "developerName": "hank",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Help me maintain this agent skill."
+    ]
+  }
+}
