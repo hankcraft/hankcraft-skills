@@ -36,15 +36,19 @@ Bun ships replacements for most Node.js ecosystem tools. Always prefer them:
 | `eslint` | `oxlint` |
 | `prettier` | `oxfmt` |
 | `husky` / `simple-git-hooks` | `lefthook` |
-| `express` / `fastify` | `Bun.serve()` |
+| Framework-free HTTP server | `Bun.serve()` |
 | `better-sqlite3` | `bun:sqlite` |
 | `pg` / `postgres.js` | `Bun.sql` |
 | `dotenv` | automatic (Bun loads `.env`) |
 | `execa` | `Bun.$\`cmd\`` |
 
+An existing framework owns its routing and entrypoint shape. Use `Bun.serve()` directly only when no selected framework already provides a Bun entrypoint.
+
 ---
 
 ## 1. Project Initialization
+
+For a new standalone project:
 
 ```sh
 bun init -y
@@ -52,6 +56,8 @@ git init
 bun add -d typescript @types/bun
 bun add -d --exact oxlint oxfmt lefthook
 ```
+
+In an existing repository, inspect its workspace layout first. Do not run `bun init` or `git init` again. Install repository-wide tooling at the workspace root; install runtime dependencies in the workspace that imports them.
 
 Pin behavior-sensitive lint/format/hook tools to exact versions and commit `bun.lock`. Keep other dependency version policy project-specific.
 
@@ -90,10 +96,12 @@ Why these flags:
 - `verbatimModuleSyntax: true` — enforces `import type` for type-only imports; eliminates erasure ambiguity and improves performance.
 - `noUncheckedIndexedAccess` — surfaces `undefined` from array/record indexing, catches a class of bugs oxlint can't.
 
-Type check:
+Standalone type check:
 ```sh
 bunx --no-install tsc --noEmit
 ```
+
+In a monorepo, keep shared compiler options in a root base config and let every workspace extend it with its own `types`, `lib`, `jsx`, `include`, and `exclude`. Run each workspace's `typecheck` script rather than checking the repository through one catch-all root project.
 
 ---
 
@@ -101,7 +109,7 @@ bunx --no-install tsc --noEmit
 
 `bunfig.toml` is optional. Use `bun add --exact` for behavior-sensitive tools instead of forcing exact versions for every dependency. Reproducible CI comes from committing `bun.lock` and running `bun ci`.
 
-Add other sections (preload, test config) as needed — see the `bun-typescript` skill for the full reference.
+Add other sections such as preload or test configuration only when the project needs them.
 
 ---
 
@@ -148,6 +156,8 @@ The `$schema` reference gives editor autocomplete for the config file itself.
 ```
 
 oxlint walks from the cwd by default and respects `.gitignore`. No need for glob arguments in the script.
+
+One root configuration is the monorepo baseline. When a workspace needs different rules, add a nested configuration that explicitly extends the root; nested Oxlint configurations are selected by proximity and are not merged automatically.
 
 ### Optional type-aware linting
 
@@ -359,7 +369,7 @@ jobs:
       - run: bun run format:check
 
       # Slower checks that don't fit pre-commit
-      - run: bun run typecheck
+      - run: bun --filter '*' typecheck
       - run: bun test --coverage
       - run: bun --filter '*' build      # in a monorepo
 ```
@@ -370,7 +380,7 @@ jobs:
 
 ## 9. Monorepo Notes
 
-In a Bun workspace monorepo (`workspaces: ["packages/*"]`), keep oxlint, oxfmt, and lefthook **at the root** as devDependencies. They operate on file paths and don't care about package boundaries.
+In a Bun workspace monorepo, keep oxlint, oxfmt, and lefthook **at the root** as devDependencies. Keep application and library runtime dependencies in the workspace that imports them; do not rely on hoisting or a root dependency to make undeclared imports work.
 
 The lefthook config (one `lefthook.yml` at the root) handles every package's staged files automatically — `{staged_files}` is repo-wide.
 
@@ -398,13 +408,33 @@ Workspace packages can reference catalog versions:
 }
 ```
 
-For everything else about Bun monorepos (workspace protocol, `--filter` scripts, per-package tsconfig extension, etc.), see the standalone `bun-typescript` skill.
+Declare dependencies between workspaces with `workspace:*`. Give each workspace its own scripts and TypeScript configuration:
+
+```json
+{
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "build": "bun build ./src/index.ts --outdir ./dist"
+  }
+}
+```
+
+Run scripts from the root with filters:
+
+```sh
+bun --filter '*' typecheck
+bun --filter '*' test
+bun --filter '*' build
+```
+
+Only define scripts a workspace supports. Narrow the filter when a command applies to one application or package group.
 
 ---
 
 ## 10. Bun-Native APIs (Quick Reference)
 
-This skill is focused on the lint/format/hooks layer; for the full Bun API surface (`Bun.serve`, `bun:sqlite`, `Bun.sql`, `Bun.file`, `Bun.$`, WebSockets, HTML imports, Docker), see the `bun-typescript` skill. Brief reminders:
+This skill is focused on the lint/format/hooks layer. Brief Bun-native API reminders:
 
 ```ts
 // HTTP
