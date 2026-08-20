@@ -48,10 +48,12 @@ Bun ships replacements for most Node.js ecosystem tools. Always prefer them:
 
 ```sh
 bun init -y
-bun add -d @types/bun oxlint oxfmt lefthook
+git init
+bun add -d typescript @types/bun
+bun add -d --exact oxlint oxfmt lefthook
 ```
 
-Pin lint/format/hook tools to **exact** versions (see §4) — these are dev tools where reproducible behavior matters more than getting patch updates.
+Pin behavior-sensitive lint/format/hook tools to exact versions and commit `bun.lock`. Keep other dependency version policy project-specific.
 
 ---
 
@@ -62,12 +64,11 @@ Recommended `tsconfig.json`:
 ```jsonc
 {
   "compilerOptions": {
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "Preserve",
     "moduleResolution": "bundler",
     "moduleDetection": "force",
-    "jsx": "preserve",
     "strict": true,
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
@@ -81,6 +82,8 @@ Recommended `tsconfig.json`:
 }
 ```
 
+Add `DOM`/`DOM.Iterable` only for browser targets. Add the JSX mode required by the chosen framework; server-only Bun projects should not expose browser globals by default.
+
 Why these flags:
 - `noEmit: true` — Bun transpiles at runtime; tsc only type-checks.
 - `moduleResolution: "bundler"` — required for `allowImportingTsExtensions` and matches Bun's resolution.
@@ -89,19 +92,14 @@ Why these flags:
 
 Type check:
 ```sh
-bunx tsc --noEmit
+bunx --no-install tsc --noEmit
 ```
 
 ---
 
 ## 3. `bunfig.toml`
 
-```toml
-[install]
-exact = true
-```
-
-`exact = true` is important when you're using oxlint/oxfmt/lefthook — these are pre-1.0 / fast-moving tools and floating ranges will cause confusing CI drift. Pin everything.
+`bunfig.toml` is optional. Use `bun add --exact` for behavior-sensitive tools instead of forcing exact versions for every dependency. Reproducible CI comes from committing `bun.lock` and running `bun ci`.
 
 Add other sections (preload, test config) as needed — see the `bun-typescript` skill for the full reference.
 
@@ -114,7 +112,7 @@ oxlint is a Rust-based linter that's roughly 50–100× faster than ESLint. It i
 ### Install
 
 ```sh
-bun add -d oxlint
+bun add -d --exact oxlint
 ```
 
 Pin it. oxlint releases frequently and rules graduate between versions.
@@ -151,12 +149,31 @@ The `$schema` reference gives editor autocomplete for the config file itself.
 
 oxlint walks from the cwd by default and respects `.gitignore`. No need for glob arguments in the script.
 
-### What oxlint does NOT do
+### Optional type-aware linting
 
-- **Type-aware rules** — oxlint is not type-aware. Rules like `no-floating-promises` that need the TS type checker are not (yet) supported. Run `tsc --noEmit` in CI to catch what oxlint can't.
-- **Auto-fix everything** — `--fix` only applies safe, mechanical fixes. Some lint warnings still need human attention.
+Oxlint supports type-aware rules through the separate `oxlint-tsgolint` package. Add it only when the project needs rules such as `typescript/no-floating-promises`:
 
-Don't try to make oxlint do ESLint's full job. The right mental model: oxlint catches ~80% of bugs at 1% of the cost; tsc + tests catch the rest.
+```sh
+bun add -d --exact oxlint-tsgolint
+bunx --no-install oxlint --type-aware
+```
+
+The equivalent root config is:
+
+```json
+{
+  "options": {
+    "typeAware": true
+  },
+  "rules": {
+    "typescript/no-floating-promises": "error"
+  }
+}
+```
+
+Keep `tsc --noEmit` in CI. Oxlint's `--type-check` can report TypeScript diagnostics, but it remains experimental and should not replace the baseline type-check step by default.
+
+`--fix` only applies safe, mechanical fixes. Some lint warnings still need human attention.
 
 ---
 
@@ -167,7 +184,7 @@ oxfmt is a Rust-based formatter from the Oxc project. It aims for Prettier-compa
 ### Install
 
 ```sh
-bun add -d oxfmt
+bun add -d --exact oxfmt
 ```
 
 Pin it. oxfmt is still pre-1.0 — output formatting can shift between minor versions. A pinned version means the whole team produces byte-identical formatting.
@@ -191,9 +208,9 @@ oxfmt path/to/file # format specific files
 }
 ```
 
-### What oxfmt does NOT (yet) do
+### Language support
 
-oxfmt is younger than oxlint. As of this writing it covers JS/TS/JSX/TSX/JSON well, but support for `.vue`, `.svelte`, `.md`, etc. is uneven. Check the latest release notes if you need exotic file types — and keep Prettier as a fallback for file types oxfmt doesn't handle yet.
+Oxfmt supports JS, TS, JSX, TSX, JSON, YAML, TOML, HTML, Vue, Svelte, CSS, Markdown, MDX, GraphQL, and more. Some formats use bundled Prettier while native implementations are still being completed; `.svelte` additionally requires the `svelte` package and formatter option. Keep standalone Prettier only when the project depends on unsupported plugin behavior.
 
 Don't run oxlint and oxfmt in conflicting modes. oxlint has stylistic rules in the `style` category that overlap with formatter concerns — keep the `style` category disabled (or warn-only) and let oxfmt own formatting.
 
@@ -210,7 +227,7 @@ Lefthook is a fast, parallel git hooks manager written in Go. Compared to husky:
 ### Install
 
 ```sh
-bun add -d lefthook
+bun add -d --exact lefthook
 ```
 
 Then add a `prepare` script so hooks install on `bun install`:
@@ -229,26 +246,26 @@ Then add a `prepare` script so hooks install on `bun install`:
 
 ```yaml
 pre-commit:
-  parallel: true
+  piped: true
   jobs:
     - name: oxlint
-      glob: "*.{js,ts,jsx,tsx,vue,mjs,cjs}"
-      run: bunx oxlint --fix {staged_files}
+      glob: "*.{js,ts,jsx,tsx,vue,svelte,astro,mjs,cjs,mts,cts}"
+      run: bunx --no-install oxlint --fix {staged_files}
       stage_fixed: true
 
     - name: oxfmt
-      glob: "*.{js,ts,jsx,tsx,vue,mjs,cjs,json}"
-      run: bunx oxfmt {staged_files}
+      glob: "*"
+      run: bunx --no-install oxfmt --no-error-on-unmatched-pattern {staged_files}
       stage_fixed: true
 ```
 
 Why this shape:
 
-- **`parallel: true`** — oxlint and oxfmt don't conflict on the same file (lint reads, format rewrites), and on a multi-core machine you want them running concurrently.
-- **`glob:` per job** — restricts each job to file types it actually handles. Without it, oxfmt would be called on `.png` files and waste time exiting.
+- **`piped: true`** — `oxlint --fix` and oxfmt both rewrite files. Run lint fixes first, then format their output to avoid races and lost edits.
+- **`glob:` per job** — restrict oxlint to supported source files. Let oxfmt select supported formats; `--no-error-on-unmatched-pattern` makes unsupported staged files a no-op.
 - **`{staged_files}` template** — Lefthook expands this to only the files staged for this commit, not the entire repo. Keeps the hook fast even on large repos.
 - **`stage_fixed: true`** — when `--fix` rewrites a file, Lefthook re-stages it so the fix is part of the commit. Without this, the user has to commit, see the unstaged fixes, and commit again.
-- **`bunx`** — uses the locally pinned version. Don't use globally installed binaries in hooks; they drift between machines.
+- **`bunx --no-install`** — requires the locally pinned version instead of silently downloading a missing package.
 
 ### What NOT to put in pre-commit
 
@@ -278,16 +295,12 @@ Reserve this for genuine emergencies. Don't normalize `--no-verify`.
 
 ```sh
 bun init -y
-bun add -d @types/bun oxlint oxfmt lefthook
+git init
+bun add -d typescript @types/bun
+bun add -d --exact oxlint oxfmt lefthook
 ```
 
 Then create:
-
-**`bunfig.toml`**
-```toml
-[install]
-exact = true
-```
 
 **`.oxlintrc.json`** — see §4
 
@@ -311,16 +324,25 @@ Then:
 
 ```sh
 bun install     # also runs `prepare` → installs hooks
-git init        # if not already
 ```
 
-Make a test commit — you should see oxlint and oxfmt run in parallel.
+Make a test commit — you should see oxlint run before oxfmt.
 
 ---
 
 ## 8. CI/CD
 
 GitHub Actions example that mirrors the local hooks plus the slower checks:
+
+Pin Bun in `package.json` so local tooling and CI share an explicit version:
+
+```json
+{
+  "packageManager": "bun@1.3.14"
+}
+```
+
+Update that version intentionally with the project. `setup-bun` reads it automatically:
 
 ```yaml
 jobs:
@@ -329,10 +351,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: latest
 
-      - run: bun install --frozen-lockfile
+      - run: bun ci
 
       # Fast checks (mirror the pre-commit hook)
       - run: bun run lint
@@ -365,12 +385,6 @@ For shared dependency versions across workspaces, use Bun's catalogs:
     "catalog": {
       "typescript": "^5.4.0"
     }
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "lefthook": "2.1.5",
-    "oxfmt": "0.45.0",
-    "oxlint": "1.60.0"
   }
 }
 ```
@@ -413,11 +427,12 @@ await $`ls -la`.text();
 
 ## Common Gotchas
 
-- **Pinning** — `[install] exact = true` plus exact versions in `package.json` for oxlint/oxfmt/lefthook. These tools change behavior between minor versions; floating ranges cause confusing "works on my machine" formatting drift.
-- **oxlint is not type-aware** — keep `tsc --noEmit` in CI. Don't expect oxlint to catch floating promises or unsafe `any` flow.
+- **Pinning** — install oxlint/oxfmt/lefthook with `bun add --exact`, commit `bun.lock`, and use `bun ci`. Do not impose exact versions on unrelated dependencies without a project policy.
+- **Type-aware oxlint** — install `oxlint-tsgolint` and enable `typeAware` only when needed. Keep `tsc --noEmit` as the default CI type check.
 - **oxfmt vs oxlint stylistic rules** — disable oxlint's `style` category (or keep it warn-only); let oxfmt own formatting concerns. Two tools fighting over the same file is a recipe for hook loops.
 - **Pre-commit speed** — keep hooks under ~3 seconds. Move tsc and tests to pre-push or CI.
+- **Sequential writers** — run `oxlint --fix` before oxfmt; never let both rewrite the same staged file in parallel.
 - **`stage_fixed: true`** — always set this on jobs that auto-fix. Otherwise the fix lives outside the commit.
-- **`bunx` in hooks, not global binaries** — version pinning is meaningless if the hook calls a globally installed `oxlint`.
+- **`bunx --no-install` in hooks** — version pinning is meaningless if a missing local binary can fall back to an automatic download.
 - **`prepare` script** — don't forget `"prepare": "lefthook install"`. Without it, collaborators clone the repo and silently have no hooks.
 - **`--no-verify`** — if you're reaching for it, the hook is too slow or too strict. Fix the hook, not the workaround.
