@@ -1,11 +1,24 @@
 ---
 name: hono-api-development
-description: Use when building Hono web applications or when the user asks about Hono APIs, routing, middleware, JSX, validation, testing, or streaming. TRIGGER when code imports from 'hono' or 'hono/*', or user mentions Hono. Use `npx hono request` to test endpoints.
+description: Use when building Hono applications or working with Hono routing, middleware, validation, authentication, OpenAPI, RPC, WebSockets, testing, integrations, or deployment. Trigger when code imports from `hono` or `hono/*`, or the user mentions Hono.
 ---
 
 # Hono Skill
 
-Build Hono web applications. This skill provides inline API knowledge for AI. Use `npx hono request` to test endpoints. If the `hono-docs` MCP server is configured, prefer its tools for the latest documentation over the inline reference.
+Build Hono applications using current official patterns. Before giving framework-specific guidance, consult the relevant page in the [official Hono documentation](https://hono.dev/docs); prefer the `hono-docs` MCP server when configured. Use `npx hono request` or `app.request()` to test endpoints.
+
+## Start and Topic Routing
+
+Create a project with `npm create hono@latest`, then select the target runtime. Runtime choice controls the entrypoint, deployment, static-file, and WebSocket adapters.
+
+Read only the references relevant to the request:
+
+- Architecture, route composition, validation, OpenAPI, and errors: [references/architecture-and-contracts.md](references/architecture-and-contracts.md)
+- Authentication, authorization, cookies, and operational middleware: [references/auth-security-operations.md](references/auth-security-operations.md)
+- Uploads, WebSockets, and testing: [references/files-realtime-testing.md](references/files-realtime-testing.md)
+- Runtime selection, deployment, and external integrations: [references/deployment-integrations.md](references/deployment-integrations.md)
+
+Hono core does not prescribe sessions, database access, ORM choice, or runtime-independent deployment. Use the selected runtime's official guide and load ecosystem integration documentation only when the user chooses that integration.
 
 ## Hono CLI Usage
 
