@@ -1,0 +1,27 @@
+{
+  "skill_name": "system-design-skills",
+  "artifact_type": "evals-public",
+  "schema_version": 2,
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Design a URL shortener. I need the architecture and diagrams, but no implementation framework or application code.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Design and implement a small issue-tracker API using Hono on Bun. Keep the architecture simple and use the repository's existing tooling.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Add a validated PATCH /users/:id route to this existing Hono application. The current container boundaries do not change.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Help me design a notification service, but stop after the markdown C4 model so I can review it before generating LikeC4.",
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "skill_name": "system-design-skills",
+  "evals": [
+    {
+      "id": 0,
+      "expected_output": "The workflow produces a complete c4-model.md, continues automatically to LikeC4 source, validates edited source files, and does not require or invent Hono/Bun implementation.",
+      "files": [],
+      "expectations": [
+        "The response covers system context, containers, optional components, an element registry, and relationships.",
+        "The workflow continues from c4-model.md to LikeC4 without asking the user to invoke a second skill.",
+        "The response verifies LikeC4 using filteredErrors for edited source files.",
+        "The response does not add Hono, Bun, or application implementation when none was requested."
+      ]
+    },
+    {
+      "id": 1,
+      "expected_output": "The workflow completes and validates architecture before implementation, then applies Hono and Bun with their documented ownership boundaries.",
+      "files": [],
+      "expectations": [
+        "The response completes the C4 markdown-to-LikeC4 workflow before implementation.",
+        "Hono owns API routes, middleware, validation, contracts, endpoint tests, and adapters.",
+        "Bun owns package management, workspace/toolchain setup, TypeScript, Oxc, hooks, and CI.",
+        "Implementation preserves modeled container and external-system boundaries or updates and revalidates the model when a boundary changes."
+      ]
+    },
+    {
+      "id": 2,
+      "expected_output": "The response handles the routine endpoint change with the Hono skill and existing repository tooling without forcing a new system-design workflow.",
+      "files": [],
+      "expectations": [
+        "The response does not require c4-model.md or LikeC4 output for the routine route change.",
+        "The response uses Hono validation and endpoint testing conventions.",
+        "The response preserves existing architecture boundaries."
+      ]
+    },
+    {
+      "id": 3,
+      "expected_output": "The workflow produces the complete markdown handoff and stops before LikeC4 because the user explicitly requested that checkpoint.",
+      "files": [],
+      "expectations": [
+        "The response produces c4-model.md with its required sections and source-of-truth tables.",
+        "The response does not generate LikeC4 source yet.",
+        "The response identifies the explicit markdown-only request as the reason for stopping."
+      ]
+    }
+  ]
+}
