@@ -1,14 +1,14 @@
 {
-  "name": "hc-agent-skills",
+  "name": "hankcraft-skills",
   "interface": {
-    "displayName": "HC Agent Skills"
+    "displayName": "Hankcraft Skills"
   },
   "plugins": [
     {
-      "name": "hc-agent-skills",
+      "name": "hankcraft-skills",
       "source": {
         "source": "local",
-        "path": "./plugins/hc-agent-skills"
+        "path": "./plugins/hankcraft-skills"
       },
       "policy": {
         "installation": "AVAILABLE",

@@ -4,16 +4,16 @@ This repository publishes portable Agent Skills through a shared skill directory
 
 ## Repository model
 
-Published skills live under `plugins/hc-agent-skills/skills/<skill-name>/`. Each directory contains a required `SKILL.md` and only the scripts, references, or assets that capability uses.
+Published skills live under `plugins/hankcraft-skills/skills/<skill-name>/`. Each directory contains a required `SKILL.md` and only the scripts, references, or assets that capability uses.
 
 Codex and Claude Code metadata wrap the same plugin directory:
 
 | Client      | Manifest                                             |
 | ----------- | ---------------------------------------------------- |
-| Codex       | `plugins/hc-agent-skills/.codex-plugin/plugin.json`  |
-| Claude Code | `plugins/hc-agent-skills/.claude-plugin/plugin.json` |
+| Codex       | `plugins/hankcraft-skills/.codex-plugin/plugin.json`  |
+| Claude Code | `plugins/hankcraft-skills/.claude-plugin/plugin.json` |
 
-Marketplace catalogs live at `.agents/plugins/marketplace.json` and `.claude-plugin/marketplace.json`. They point to `plugins/hc-agent-skills`; they do not contain copies of skill instructions.
+Marketplace catalogs live at `.agents/plugins/marketplace.json` and `.claude-plugin/marketplace.json`. They point to `plugins/hankcraft-skills`; they do not contain copies of skill instructions.
 
 Files under `docs/` are project documentation. Because they are not named `SKILL.md`, skill installers do not publish them as capabilities.
 
@@ -31,7 +31,7 @@ Validate an individual skill:
 
 ```bash
 uvx --from skills-ref==0.1.0 agentskills validate \
-  plugins/hc-agent-skills/skills/<skill-name>
+  plugins/hankcraft-skills/skills/<skill-name>
 ```
 
 Validate Claude Code packaging:
@@ -49,6 +49,6 @@ Changes merged to GitHub become available to repository-based installers. For a 
 1. Update the version in both native plugin manifests.
 2. Commit the release atomically.
 3. Tag the repository with the same semantic version.
-4. Confirm installation from `hankcraft/hc-agent-skills`.
+4. Confirm installation from `hankcraft/hankcraft-skills`.
 
 Do not add a custom installer until supported clients require behavior that the shared Agent Skills installer and native marketplaces cannot provide.
