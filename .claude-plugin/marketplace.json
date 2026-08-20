@@ -1,0 +1,14 @@
+{
+  "name": "hc-agent-skills",
+  "description": "Portable agent skills maintained by hank.",
+  "owner": {
+    "name": "hank"
+  },
+  "plugins": [
+    {
+      "name": "hc-agent-skills",
+      "source": "./plugins/hc-agent-skills",
+      "description": "Portable workflows for maintaining and evaluating agent skills."
+    }
+  ]
+}

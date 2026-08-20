@@ -1,0 +1,20 @@
+{
+  "name": "hc-agent-skills",
+  "interface": {
+    "displayName": "HC Agent Skills"
+  },
+  "plugins": [
+    {
+      "name": "hc-agent-skills",
+      "source": {
+        "source": "local",
+        "path": "./plugins/hc-agent-skills"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

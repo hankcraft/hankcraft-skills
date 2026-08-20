@@ -1,0 +1,9 @@
+{
+  "name": "hc-agent-skills",
+  "version": "0.1.0",
+  "description": "Portable workflows for maintaining and evaluating agent skills.",
+  "author": {
+    "name": "hank"
+  },
+  "license": "MIT"
+}
