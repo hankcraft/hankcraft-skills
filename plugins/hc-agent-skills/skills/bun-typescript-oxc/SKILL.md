@@ -44,6 +44,10 @@ Bun ships replacements for most Node.js ecosystem tools. Always prefer them:
 
 An existing framework owns its routing and entrypoint shape. Use `Bun.serve()` directly only when no selected framework already provides a Bun entrypoint.
 
+### Composition with Hono
+
+When a Hono skill also applies, this skill owns Bun package management, workspace boundaries, TypeScript baseline, Oxc, Lefthook, and CI orchestration. The Hono skill owns routes, middleware, validation, API contracts, endpoint tests, and adapter details. Keep Hono as the HTTP framework and use its Bun entrypoint; do not replace its routes with a parallel `Bun.serve()` routing table. Prefer Hono's `app.request()` inside `bun test` for endpoint behavior.
+
 ---
 
 ## 1. Project Initialization

@@ -17,6 +17,10 @@ Inspect the existing package manager, workspace layout, and deployment runtime b
 
 Select the actual deployment runtime during setup. Runtime choice controls the entrypoint, deployment, static-file, and WebSocket adapters.
 
+### Composition with Bun Tooling
+
+When a Bun toolchain skill also applies, inherit its package-manager, workspace, TypeScript baseline, lint, format, hooks, and CI conventions. This skill still owns Hono routing, middleware, validation, API contracts, endpoint tests, and the Hono-specific Bun entrypoint. Keep Hono and its runtime integrations in the API workspace; keep repository-wide tooling at the monorepo root.
+
 Read only the references relevant to the request:
 
 - Architecture, route composition, validation, OpenAPI, and errors: [references/architecture-and-contracts.md](references/architecture-and-contracts.md)
