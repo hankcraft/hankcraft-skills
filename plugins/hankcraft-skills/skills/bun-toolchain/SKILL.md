@@ -44,6 +44,10 @@ An existing framework owns its routing and entrypoint shape. Use `Bun.serve()` d
 
 When a Hono skill also applies, this skill owns Bun package management, workspace boundaries, TypeScript baseline, Oxc, Lefthook, and CI orchestration. The Hono skill owns routes, middleware, validation, API contracts, endpoint tests, and adapter details. Keep Hono as the HTTP framework and use its Bun entrypoint; do not replace its routes with a parallel `Bun.serve()` routing table. Prefer Hono's `app.request()` inside `bun test` for endpoint behavior.
 
+### Composition with System Design
+
+Do not require system-design artifacts for routine Bun tooling work. When the user asks to design and implement a system, let `system-design-skills` define containers, responsibilities, and external dependencies first. Map deployable containers to applications/workspaces, preserve those boundaries during setup, and return architectural changes to that workflow instead of silently changing the model.
+
 ---
 
 ## 1. Project Initialization

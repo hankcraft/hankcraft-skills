@@ -21,6 +21,10 @@ Select the actual deployment runtime during setup. Runtime choice controls the e
 
 When a Bun toolchain skill also applies, inherit its package-manager, workspace, TypeScript baseline, lint, format, hooks, and CI conventions. This skill still owns Hono routing, middleware, validation, API contracts, endpoint tests, and the Hono-specific Bun entrypoint. Keep Hono and its runtime integrations in the API workspace; keep repository-wide tooling at the monorepo root.
 
+### Composition with System Design
+
+Do not require system-design artifacts for routine Hono work. When the user asks to design and implement a system, let `system-design-skills` define the API container, component responsibilities, and external relationships first. Implement those responsibilities with Hono routes and modules without silently adding containers or external dependencies; return architectural changes to the system-design workflow.
+
 Read only the references relevant to the request:
 
 - Architecture, route composition, validation, OpenAPI, and errors: [references/architecture-and-contracts.md](references/architecture-and-contracts.md)

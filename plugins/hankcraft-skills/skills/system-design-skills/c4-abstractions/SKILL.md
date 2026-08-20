@@ -27,7 +27,7 @@ The deliverable is one markdown file (`c4-model.md`) following the template in `
 
 ## Workflow
 
-Run three gates in order. Each gate ends with a section appended to `c4-model.md` (created on first gate). Use `AskUserQuestion` at each gate to elicit what cannot be inferred from the prompt or repo. Don't ask what the user already stated.
+Run three gates in order. Each gate ends with a section appended to `c4-model.md` (created on first gate). Use the client's user-input mechanism only for facts that cannot be inferred safely from the prompt or repository. Don't ask what the user already stated.
 
 ### Gate 1 — System Context (C4 L1)
 
@@ -146,10 +146,11 @@ Rules:
 
 ## Handoff
 
-When all three gates done and the registry + relationships tables are complete:
+When all three gates are done and the registry + relationships tables are complete:
 
-1. Confirm with the user that the markdown matches their intent.
-2. Tell them to invoke the `likec4` skill with `c4-model.md` as input. The `likec4` skill maps each markdown section + table row to LikeC4 DSL blocks and emits `.c4` source.
+1. Resolve any material ambiguity with the user. Skip a separate confirmation when the prompt and repository already make the design clear.
+2. Continue directly to the `likec4` skill with `c4-model.md` as input. The `likec4` skill maps each markdown section + table row to LikeC4 DSL blocks and emits `.c4` source.
+3. Stop after markdown only when the user explicitly requests that checkpoint.
 
 Worked end-to-end example lives in `templates/c4-model.md`. Copy it as the starting point for a new design.
 

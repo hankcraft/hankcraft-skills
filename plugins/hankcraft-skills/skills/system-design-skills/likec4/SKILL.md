@@ -85,6 +85,10 @@ Compact ambiguity rule:
 
 This skill's primary input is the `c4-model.md` produced by the `c4-abstractions` skill. That file holds prose + ASCII for C4 Context / Containers / Components, plus two tables (Element Registry, Relationships) that are the source of truth for FQNs and labels.
 
+Continue from that handoff automatically as part of the parent system-design workflow. A separate user invocation is not required.
+
+When `bun-toolchain` also applies, it owns package installation, dependency placement, and runner conventions. This skill still owns LikeC4 project scope, DSL generation, views, and validation commands. LikeC4 remains usable with any supported runner when Bun is absent.
+
 Scaffold sources (all validate clean against `likec4@1.53+`):
 
 - `templates/example-model.c4` — single-file worked model; paste into a new project for the quickest start.
