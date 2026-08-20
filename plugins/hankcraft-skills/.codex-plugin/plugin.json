@@ -1,7 +1,7 @@
 {
   "name": "hankcraft-skills",
   "version": "0.1.0+codex.20260820052504",
-  "description": "Portable skills for Hono APIs and Bun TypeScript projects.",
+  "description": "Portable skills for Hono APIs, Bun TypeScript projects, and GCP Terraform infrastructure.",
   "author": {
     "name": "hank"
   },
@@ -9,15 +9,15 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Hankcraft Skills",
-    "shortDescription": "Develop Hono and Bun projects.",
-    "longDescription": "Build Hono APIs and Bun TypeScript projects with focused testing, Oxc tooling, and Git hooks.",
+    "shortDescription": "Develop Hono, Bun, and GCP Terraform projects.",
+    "longDescription": "Build Hono APIs, Bun TypeScript projects, and GCP Terraform infrastructure with focused workflows.",
     "developerName": "hank",
     "category": "Productivity",
     "capabilities": [
       "Write"
     ],
     "defaultPrompt": [
-      "Help me develop this Hono or Bun TypeScript project."
+      "Help me develop this Hono, Bun TypeScript, or GCP Terraform project."
     ]
   }
 }

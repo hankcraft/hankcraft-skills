@@ -52,6 +52,7 @@ Published skills use `SKILL.md` under `plugins/hankcraft-skills/skills/`. See [M
 
 - `hono-backend` — Build and maintain production Hono backends.
 - `bun-toolchain` — Configure Bun TypeScript projects with Oxlint, Oxfmt, and Lefthook.
+- `gcp-terraform` — Manage GCP infrastructure with Terraform in Bun monorepos.
 
 ## Validate
 
@@ -60,6 +61,8 @@ uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/hono-backend
 uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/bun-toolchain
+uvx --from skills-ref==0.1.0 agentskills validate \
+  plugins/hankcraft-skills/skills/gcp-terraform
 claude plugin validate .
 ```
 
