@@ -7,8 +7,8 @@ Portable Agent Skills with native Codex and Claude Code plugin packaging.
 Install the shared skill into Codex, Claude Code, Antigravity, or another supported client:
 
 ```bash
-npx skills add hankchiu/hc-agent-skills \
-  --skill maintain-agent-skills \
+npx skills add https://github.com/hankcraft/hc-agent-skills/tree/main/plugins/hc-agent-skills \
+  --skill hono-api-development \
   --agent '*' \
   --global
 ```
@@ -16,14 +16,14 @@ npx skills add hankchiu/hc-agent-skills \
 Install the native Codex plugin:
 
 ```bash
-codex plugin marketplace add hankchiu/hc-agent-skills
+codex plugin marketplace add hankcraft/hc-agent-skills
 codex plugin add hc-agent-skills@hc-agent-skills
 ```
 
 Install the native Claude Code plugin from inside Claude Code:
 
 ```text
-/plugin marketplace add hankchiu/hc-agent-skills
+/plugin marketplace add hankcraft/hc-agent-skills
 /plugin install hc-agent-skills@hc-agent-skills
 ```
 
@@ -45,15 +45,17 @@ plugins/hc-agent-skills/
 ├── .codex-plugin/plugin.json             Codex package metadata
 ├── .claude-plugin/plugin.json            Claude Code package metadata
 └── skills/                               Canonical portable skills
+harness/
+└── skills/                               Project-only skill fixtures
 ```
 
-Add each capability once under `plugins/hc-agent-skills/skills/<skill-name>/`. Keep vendor-specific configuration in plugin manifests.
+Published skills live under `plugins/hc-agent-skills/skills/`. Project-only harness skills live under `harness/skills/` and are excluded by the scoped install URL above.
 
 ## Validate
 
 ```bash
 uvx --from skills-ref==0.1.0 agentskills validate \
-  plugins/hc-agent-skills/skills/maintain-agent-skills
+  plugins/hc-agent-skills/skills/hono-api-development
 claude plugin validate .
 ```
 

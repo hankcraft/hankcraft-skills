@@ -1,22 +1,23 @@
 {
   "name": "hc-agent-skills",
   "version": "0.1.0",
-  "description": "Portable workflows for maintaining and evaluating agent skills.",
+  "description": "Portable skills for building HTTP APIs.",
   "author": {
     "name": "hank"
   },
+  "repository": "https://github.com/hankcraft/hc-agent-skills",
   "skills": "./skills/",
   "interface": {
     "displayName": "HC Agent Skills",
-    "shortDescription": "Maintain portable agent skills.",
-    "longDescription": "Create, validate, publish, and update reusable agent skills across compatible CLIs.",
+    "shortDescription": "Develop Hono APIs.",
+    "longDescription": "Build and modify Hono APIs with focused validation and request-level tests.",
     "developerName": "hank",
     "category": "Productivity",
     "capabilities": [
       "Write"
     ],
     "defaultPrompt": [
-      "Help me maintain this agent skill."
+      "Help me develop this Hono API."
     ]
   }
 }
