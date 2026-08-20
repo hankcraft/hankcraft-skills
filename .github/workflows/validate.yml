@@ -1,0 +1,27 @@
+name: Validate
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - name: Validate skills
+        run: |
+          for skill in plugins/*/skills/*; do
+            uvx --from skills-ref==0.1.0 agentskills validate "$skill"
+          done
+      - name: Validate JSON manifests
+        run: |
+          find .agents .claude-plugin plugins -name '*.json' -print0 |
+            xargs -0 -n1 python3 -m json.tool >/dev/null
+      - name: Check Python syntax
+        run: python3 -m py_compile evaluate_prompts.py
