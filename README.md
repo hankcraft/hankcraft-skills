@@ -50,16 +50,16 @@ Published skills use `SKILL.md` under `plugins/hc-agent-skills/skills/`. See [Ma
 
 ## Included skills
 
-- `hono-api-development` — Build and maintain production Hono APIs.
-- `bun-typescript-oxc` — Configure Bun TypeScript projects with Oxlint, Oxfmt, and Lefthook.
+- `hono-backend` — Build and maintain production Hono backends.
+- `bun-toolchain` — Configure Bun TypeScript projects with Oxlint, Oxfmt, and Lefthook.
 
 ## Validate
 
 ```bash
 uvx --from skills-ref==0.1.0 agentskills validate \
-  plugins/hc-agent-skills/skills/hono-api-development
+  plugins/hc-agent-skills/skills/hono-backend
 uvx --from skills-ref==0.1.0 agentskills validate \
-  plugins/hc-agent-skills/skills/bun-typescript-oxc
+  plugins/hc-agent-skills/skills/bun-toolchain
 claude plugin validate .
 ```
 

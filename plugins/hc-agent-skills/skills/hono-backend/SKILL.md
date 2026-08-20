@@ -1,9 +1,9 @@
 ---
-name: hono-api-development
+name: hono-backend
 description: Use when building Hono applications or working with Hono routing, middleware, validation, authentication, OpenAPI, RPC, WebSockets, testing, integrations, or deployment. Trigger when code imports from `hono` or `hono/*`, or the user mentions Hono.
 ---
 
-# Hono Skill
+# Hono Backend
 
 Build Hono applications using current official patterns. Before giving framework-specific guidance, consult the relevant page in the [official Hono documentation](https://hono.dev/docs); prefer the `hono-docs` MCP server when configured. Use `app.request()` or the repository package manager's Hono CLI to test endpoints.
 

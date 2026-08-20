@@ -1,5 +1,5 @@
 ---
-name: bun-typescript-oxc
+name: bun-toolchain
 description: >
   Modern, production-ready practices for building TypeScript projects with Bun plus the Oxc toolchain
   (oxlint, oxfmt) and Lefthook git hooks. Use this skill whenever the user is working with Bun + TypeScript
@@ -10,7 +10,7 @@ description: >
   bun:test, Bun.serve(), tsconfig, bunfig.toml, and the full lint/format/hook integration.
 ---
 
-# Bun + TypeScript + Oxc + Lefthook
+# Bun Toolchain
 
 A composite stack for fast, modern TypeScript projects:
 
