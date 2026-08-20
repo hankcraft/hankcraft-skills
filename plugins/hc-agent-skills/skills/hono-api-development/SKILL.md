@@ -5,11 +5,17 @@ description: Use when building Hono applications or working with Hono routing, m
 
 # Hono Skill
 
-Build Hono applications using current official patterns. Before giving framework-specific guidance, consult the relevant page in the [official Hono documentation](https://hono.dev/docs); prefer the `hono-docs` MCP server when configured. Use `npx hono request` or `app.request()` to test endpoints.
+Build Hono applications using current official patterns. Before giving framework-specific guidance, consult the relevant page in the [official Hono documentation](https://hono.dev/docs); prefer the `hono-docs` MCP server when configured. Use `app.request()` or the repository package manager's Hono CLI to test endpoints.
 
 ## Start and Topic Routing
 
-Create a project with `npm create hono@latest`, then select the target runtime. Runtime choice controls the entrypoint, deployment, static-file, and WebSocket adapters.
+Inspect the existing package manager, workspace layout, and deployment runtime before changing project structure. Do not initialize a repository inside an existing repository.
+
+- Existing project: add Hono to the application package that owns the API.
+- New standalone project: run the Hono creator with the chosen package manager, such as `bun create hono@latest my-app` or `npm create hono@latest my-app`.
+- Existing monorepo: create or reuse an API workspace such as `apps/api`; keep its runtime dependencies in that workspace's `package.json`.
+
+Select the actual deployment runtime during setup. Runtime choice controls the entrypoint, deployment, static-file, and WebSocket adapters.
 
 Read only the references relevant to the request:
 
@@ -28,17 +34,19 @@ Test endpoints without starting an HTTP server. Uses `app.request()` internally.
 
 ```bash
 # GET request
-npx hono request [file] -P /path
+<package-runner> hono request [file] -P /path
 
 # POST request with JSON body
-npx hono request [file] -X POST -P /api/users -d '{"name": "test"}'
+<package-runner> hono request [file] -X POST -P /api/users -d '{"name": "test"}'
 ```
+
+Use `bunx --no-install` when the CLI is installed in a Bun repository and `npx --no-install` when it is installed in an npm repository. Omit `--no-install` only when intentionally running an uninstalled package.
 
 **Note:** Do not pass credentials directly in CLI arguments. Use environment variables for sensitive values. `hono request` does not support Cloudflare Workers bindings (KV, D1, R2, etc.). When bindings are required, use `workers-fetch` instead:
 
 ```bash
-npx workers-fetch /path
-npx workers-fetch -X POST -H "Content-Type:application/json" -d '{"name":"test"}' /api/users
+<package-runner> workers-fetch /path
+<package-runner> workers-fetch -X POST -H "Content-Type:application/json" -d '{"name":"test"}' /api/users
 ```
 
 ---
@@ -385,7 +393,7 @@ app.get('/', (c) => {
 
 ### jsxRenderer Middleware
 
-Use `jsxRenderer` middleware for layouts. See `npx hono docs /docs/middleware/builtin/jsx-renderer` for details.
+Use `jsxRenderer` middleware for layouts. Run `hono docs /docs/middleware/builtin/jsx-renderer` through the repository package runner for details.
 
 ### Async Components
 
@@ -542,7 +550,7 @@ import { upgradeWebSocket } from 'hono/cloudflare-workers' // or other adapter
 
 Available helpers: Accepts, Adapter, ConnInfo, Cookie, css, Dev, Factory, html, JWT, Proxy, Route, SSG, Streaming, Testing, WebSocket.
 
-For details, use `npx hono docs /docs/helpers/<helper-name>`.
+For details, run `hono docs /docs/helpers/<helper-name>` through the repository package runner.
 
 ### Factory
 

@@ -6,7 +6,9 @@ Official sources: [Getting Started](https://hono.dev/docs/getting-started/basic)
 
 ## Runtime and Deployment
 
-Start with `npm create hono@latest` and choose the actual deployment target. Follow that target's Hono guide for its entrypoint, bindings, local development, static-file adapter, WebSocket adapter, and deployment command. Do not present a Node entrypoint as portable to edge runtimes.
+For a new standalone project, run the Hono creator with the selected package manager and choose the actual deployment target. In an existing repository, add Hono to the application package instead of reinitializing the repository. Follow the target's Hono guide for its entrypoint, bindings, local development, static-file adapter, WebSocket adapter, and deployment command. Do not present one runtime's entrypoint as portable to another.
+
+For Bun, the normal entrypoint exports the Hono app. When Bun runtime options or WebSockets are required, export an object containing `fetch: app.fetch` and the required runtime options; use `websocket` from `hono/bun` for Hono WebSockets.
 
 For Node containers, follow Hono's documented multi-stage build: install reproducibly, build, prune development dependencies, copy built output into the runtime image, and run as a non-root user. Keep secrets outside the image. Use platform bindings or environment configuration for runtime values.
 

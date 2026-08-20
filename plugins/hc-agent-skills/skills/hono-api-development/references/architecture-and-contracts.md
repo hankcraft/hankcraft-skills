@@ -30,6 +30,14 @@ Hono's core validator validates requests, not outgoing responses. For documented
 - If the project already uses another Standard Schema library, use the documented `hono-openapi` integration rather than migrating schema libraries solely for OpenAPI.
 - Use Hono RPC when server and client share source types. Use OpenAPI for independently deployed or cross-language consumers.
 
+For Hono RPC across monorepo workspaces:
+
+- Enable `strict` in both server and client TypeScript configurations.
+- Keep the Hono version aligned across workspaces.
+- Export `AppType` through an explicit package export and consume it with `import type`.
+- Declare the server or API-contract workspace through the repository's supported workspace protocol; do not rely on dependency hoisting.
+- Use TypeScript project references or publish compiled client declarations when direct source-type imports become slow or unstable.
+
 Tests must assert representative response bodies and status codes; an OpenAPI response declaration is not a substitute for runtime output checks.
 
 ## Error Flow
