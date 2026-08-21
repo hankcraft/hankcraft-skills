@@ -43,7 +43,7 @@ Hex colors can be used if you define a custom named color in the specification:
 ```likec4
 specification {
   color my-brand-blue #003366   // Define a custom named token
-  
+
   element service {
     style { color my-brand-blue } // Reference the custom token
   }
@@ -85,15 +85,15 @@ To get the full up-to-date list, run `likec4 list-icons` or `likec4 list-icons -
 ```likec4
 specification {
   color brand-orange #FF8C42     // Custom brand color
-  
+
   element actor {
-    style { 
+    style {
       shape person
-      color primary 
+      color primary
       icon tech:user
     }
   }
-  
+
   element service {
     style {
       shape component
@@ -101,7 +101,7 @@ specification {
       icon tech:gear
     }
   }
-  
+
   element critical-service {
     style {
       shape component
@@ -109,7 +109,7 @@ specification {
       icon tech:alert
     }
   }
-  
+
   element queue {
     style {
       shape queue
@@ -122,15 +122,15 @@ model {
   customer = actor {
     style { color primary }
   }
-  
+
   api = service {
     style { color primary }
   }
-  
+
   alert-responder = critical-service {
     style { color red }
   }
-  
+
   job-queue = queue {
     style { color amber }
   }

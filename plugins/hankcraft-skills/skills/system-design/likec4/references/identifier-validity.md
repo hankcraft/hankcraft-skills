@@ -43,7 +43,7 @@ model {
 }
 ```
 
-**Correct identifier:** `payment-api` (with hyphen)  
+**Correct identifier:** `payment-api` (with hyphen)
 **Incorrect identifier:** `payment.api` (dots are FQN syntax, not part of the name)
 
 ## Use in different contexts

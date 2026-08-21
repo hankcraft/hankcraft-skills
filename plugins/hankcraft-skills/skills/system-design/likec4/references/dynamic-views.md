@@ -11,10 +11,10 @@ views {
 
     title "Flow title"
     description "Flow description"
-    
+
     SOURCE -> TARGET "step title"
     SOURCE <- TARGET "return flow"
-    
+
     // grouped parallel actions
     parallel {
       SOURCE_1 -> TARGET_1 "parallel action 1"
@@ -111,7 +111,7 @@ dynamic view with-notes {
     technology "HTTPS"
     description "Customer opens product page"
   }
-  
+
   frontend -> backend "fetch product data" {
     notes """
       Includes:
@@ -164,7 +164,7 @@ Render the dynamic view as a UML-style sequence diagram:
 ```likec4
 dynamic view checkout-sequence {
   variant sequence  // Switch to sequence diagram rendering
-  
+
   customer -> frontend "click checkout"
   frontend -> backend "POST /checkout"
   backend -> payment-service "charge card"
@@ -247,11 +247,11 @@ dynamic view payment-decision {
   frontend -> backend "validate" {
     notes "If amount > limit, rejected"
   }
-  
+
   backend -> payment-service "charge" {
     notes "Only if validation passes"
   }
-  
+
   backend <- payment-service "result"
   frontend <- backend "response"
 }

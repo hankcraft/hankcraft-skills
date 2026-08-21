@@ -20,18 +20,18 @@ views {
   view IDENTIFIER {
     TAGS                // optional tags, must come first if present, before any properties
     PROPERTIES          // optional, but must come before any view rules
-    ELEMENT_VIEW_RULES    
+    ELEMENT_VIEW_RULES
   }
   // element view can also be scoped to a specific element, explained below
-  view IDENTIFIER of ELEMENT_ID {     
+  view IDENTIFIER of ELEMENT_ID {
     TAGS
     PROPERTIES
-    ELEMENT_VIEW_RULES    
+    ELEMENT_VIEW_RULES
   }
   // dynamic views
   dynamic view IDENTIFIER {
     TAGS
-    PROPERTIES  
+    PROPERTIES
     DYNAMIC_VIEW_RULES
   }
   // deployment views
@@ -127,7 +127,7 @@ global {
 }
 
 views {
-  view index {    
+  view index {
     global style GROUP_IDENTIFIER
   }
 }

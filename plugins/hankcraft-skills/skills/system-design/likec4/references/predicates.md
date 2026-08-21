@@ -133,7 +133,7 @@ Customize predicates allow you to override properties of selected elements/relat
 For example:
 
 ```likec4
-include 
+include
   * -> some.component.*
   where
     tag is #primary
