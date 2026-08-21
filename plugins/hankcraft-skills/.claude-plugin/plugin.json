@@ -1,7 +1,7 @@
 {
   "name": "hankcraft-skills",
   "version": "0.1.0",
-  "description": "Portable skills for Hono APIs, Bun TypeScript projects, and GCP Terraform infrastructure.",
+  "description": "Portable skills for system design, LikeC4, Hono APIs, Bun TypeScript, and GCP Terraform infrastructure.",
   "author": {
     "name": "hank"
   },

@@ -1,0 +1,136 @@
+// Example LikeC4 model produced from a `c4-modeling` handoff (`c4-model.md`).
+// Case: B2B webhook delivery platform, startup scale.
+// Critical flow: accept event -> persist durably -> deliver with bounded retries.
+// In a real project, split `specification` into its own spec.c4 file.
+
+specification {
+  element actor {
+    style { shape person }
+  }
+  element system
+  element container
+  element component
+  element queue {
+    style { shape queue }
+  }
+  element database {
+    style { shape storage }
+  }
+
+  deploymentNode environment
+  deploymentNode region
+
+  relationship async { line dashed }
+
+  tag critical-path
+}
+
+model {
+  tenant = actor 'Tenant App' {
+    description 'A B2B customer: sends events, receives webhook callbacks'
+  }
+
+  platform = system 'Webhook Delivery Platform' {
+    description '''
+      SLOs: POST /events availability 99.9% (28d); successful-request p99 < 200 ms;
+      end-to-end delivery p99 < 30 s; queue age p99 < 60 s. See slo-worksheet.md.
+    '''
+
+    api = container 'Ingest API' {
+      #critical-path
+      technology 'Stateless HTTP, autoscaled'
+      description 'Validates events, looks up tenant, enqueues durably, returns 202'
+    }
+    eventQueue = queue 'Event Queue' {
+      #critical-path
+      technology 'Managed durable queue, partitioned by tenant'
+      description 'At-least-once delivery; bounded depth, sheds load above threshold'
+    }
+    worker = container 'Delivery Worker' {
+      #critical-path
+      technology 'Idempotent consumer pool'
+      description 'Delivers to tenant endpoint; bounded retries, backoff + jitter; circuit-breaks flaky endpoints'
+    }
+    dlq = queue 'Dead-letter Queue' {
+      description 'Poison messages parked after max retries; replayed manually'
+    }
+    configDb = database 'Config Store' {
+      technology 'Managed PostgreSQL'
+      description 'Tenants, endpoints, delivery policy'
+    }
+
+    api -> configDb 'read tenant + endpoint'
+    api -[async]-> eventQueue 'enqueue event' {
+      metadata { adr 'ADR-003 (async durability over sync write)' }
+    }
+    worker -> eventQueue 'dequeue + ack on 2xx'
+    worker -> configDb 'read delivery policy'
+    worker -> dlq 'park poison message'
+  }
+
+  tenant -> platform.api 'POST /events' {
+    technology 'HTTPS / JSON'
+  }
+  platform.worker -> tenant 'POST callback (retries w/ jitter)' {
+    technology 'HTTPS / JSON'
+  }
+}
+
+deployment {
+  prod = environment 'Production' {
+    usEast = region 'us-east-1' {
+      apiInst = instanceOf platform.api
+      workerInst = instanceOf platform.worker
+      queueInst = instanceOf platform.eventQueue
+      dlqInst = instanceOf platform.dlq
+      dbPrimary = instanceOf platform.configDb
+    }
+    usWest = region 'us-west-2' {
+      dbReplica = instanceOf platform.configDb
+    }
+  }
+
+  prod.usEast.dbPrimary -> prod.usWest.dbReplica 'async replication'
+}
+
+views {
+  view index {
+    title 'Landscape'
+    include *
+  }
+
+  // L1 system context: platform stays collapsed (unscoped view), neighbours pulled in
+  view context {
+    title 'System context — Webhook Delivery Platform'
+    include platform
+    include -> platform ->
+  }
+
+  // L2 containers: scoped to platform, so `*` expands to platform + its direct children
+  view containers of platform {
+    title 'Containers — Webhook Delivery Platform'
+    include *
+    style platform.dlq {
+      color amber
+    }
+  }
+
+  dynamic view deliveryFlow {
+    title 'Critical flow — accept, persist, deliver (+ failure handling)'
+    tenant -> platform.api 'POST /events'
+    platform.api -> platform.configDb 'lookup tenant + endpoint'
+    platform.api -> platform.eventQueue 'enqueue (ack to caller on enqueue)'
+    tenant <- platform.api '202 Accepted'
+    platform.eventQueue -> platform.worker 'dequeue'
+    platform.worker -> tenant 'POST callback'
+    parallel {
+      platform.worker -> platform.eventQueue 'ack on 2xx'
+      platform.worker -> platform.dlq 'park after max retries'
+    }
+  }
+
+  deployment view prodDeployment {
+    title 'Production deployment (multi-region, async DB replication)'
+    include *
+  }
+}
