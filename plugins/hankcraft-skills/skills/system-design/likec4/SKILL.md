@@ -81,9 +81,9 @@ Compact ambiguity rule:
 5. Views (diagrams) are defined in `views { ... }` block. See Views section below.
 6. After editing LikeC4 files, validate with the CLI
 
-## Consuming a `c4-modeling` handoff
+## Consuming a system-design handoff
 
-This skill's primary input is the `c4-model.md` produced by the `c4-modeling` skill. That file holds prose + ASCII for C4 Context / Containers / Components, plus two tables (Element Registry, Relationships) that are the source of truth for FQNs and labels.
+This skill's primary input is the `c4-model.md` produced by `c4-modeling` or `code-to-c4`. That file holds prose + ASCII for C4 Context / Containers / Components, plus two tables (Element Registry, Relationships) that are the source of truth for FQNs and labels. A code-derived model may also contain an Implementation Evidence table; preserve it for traceability, but generate DSL mechanically from the registry and relationships.
 
 Continue from that handoff automatically as part of the parent system-design workflow. A separate user invocation is not required.
 

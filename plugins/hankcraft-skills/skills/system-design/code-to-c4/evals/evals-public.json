@@ -1,0 +1,22 @@
+{
+  "skill_name": "code-to-c4",
+  "artifact_type": "evals-public",
+  "schema_version": 2,
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Inspect this existing repository and create LikeC4 views that help a new engineer understand the implemented architecture.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "Create a C4 container view from this monorepo. Do not assume every workspace package is independently deployed.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Document the checkout request flow from the existing code as a LikeC4 dynamic view. Clearly separate facts found in code from assumptions.",
+      "files": []
+    }
+  ]
+}

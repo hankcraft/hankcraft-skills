@@ -50,8 +50,9 @@ Published skills use `SKILL.md` under `plugins/hankcraft-skills/skills/`. See [M
 
 ## Included skills
 
-- `system-design` — Design systems through a complete C4 markdown-to-LikeC4 workflow, with optional Hono/Bun implementation handoff.
+- `system-design` — Design systems or reconstruct implemented architecture through a complete C4 markdown-to-LikeC4 workflow, with optional Hono/Bun implementation handoff.
   - `c4-modeling` — Elicit system context, containers, components, and relationships.
+  - `code-to-c4` — Recover evidence-backed C4 models from existing code.
   - `likec4` — Generate and validate LikeC4 architecture source and views.
 - `hono-backend` — Build and maintain production Hono backends.
 - `bun-toolchain` — Configure Bun TypeScript projects with Oxlint, Oxfmt, and Lefthook.
@@ -64,6 +65,8 @@ uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/system-design
 uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/system-design/c4-modeling
+uvx --from skills-ref==0.1.0 agentskills validate \
+  plugins/hankcraft-skills/skills/system-design/code-to-c4
 uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/system-design/likec4
 uvx --from skills-ref==0.1.0 agentskills validate \
