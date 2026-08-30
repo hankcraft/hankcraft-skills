@@ -17,6 +17,11 @@
       "id": 2,
       "prompt": "Document the checkout request flow from the existing code as a LikeC4 dynamic view. Clearly separate facts found in code from assumptions.",
       "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "The existing LikeC4 model and views may have drifted from this implementation. Reconcile only what is needed, add a focused view for the current behavior, and verify the rendered result.",
+      "files": []
     }
   ]
 }

@@ -10,7 +10,7 @@
         "Every modeled element and relationship has repository-relative implementation evidence.",
         "Inferred facts and material unknowns are visibly distinguished from observed facts.",
         "The response generates context, container, and selective component views rather than mirroring every file or class.",
-        "The response validates every edited LikeC4 source file and checks filteredErrors."
+        "The response validates every edited LikeC4 source file, checks filteredErrors, and inspects rendered affected views or discloses why visual verification was unavailable."
       ]
     },
     {
@@ -30,10 +30,23 @@
       "files": [],
       "expectations": [
         "The response follows the flow from an entrypoint through handlers and outbound calls using source evidence.",
-        "The dynamic view contains only steps supported by the traced path.",
+        "The dynamic view contains only steps supported by the traced path and preserves parallel work rather than inventing a linear order.",
         "Observed and inferred steps are distinguished in the evidence ledger.",
         "Missing runtime wiring is reported as unknown rather than invented.",
-        "The generated LikeC4 source is validated."
+        "The generated LikeC4 source is validated and the rendered sequence view is inspected, or unavailable visual verification is disclosed."
+      ]
+    },
+    {
+      "id": 3,
+      "expected_output": "The response compares existing LikeC4 definitions with implementation evidence, makes only necessary in-scope corrections, adds one focused view, validates it, and inspects its rendering.",
+      "files": [],
+      "expectations": [
+        "The response finds the nearest LikeC4 project and preserves established identifiers, kinds, file organization, and view conventions.",
+        "Model drift is supported by implementation evidence and is corrected only when required for the requested truthful view; other drift is reported.",
+        "Current implementation and target architecture are not blended when intent is unclear.",
+        "The response uses full FQNs for cross-file references.",
+        "Every edited source validates with filteredErrors equal to zero, and unrelated totalErrors are reported separately.",
+        "Affected views are exported and visually inspected, or unavailable visual verification is disclosed."
       ]
     }
   ]

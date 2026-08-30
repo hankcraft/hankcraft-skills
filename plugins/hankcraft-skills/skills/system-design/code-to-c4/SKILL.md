@@ -1,6 +1,6 @@
 ---
 name: code-to-c4
-description: Reconstruct C4 architecture from an existing codebase and produce evidence-backed `c4-model.md` input for LikeC4. Use when users want diagrams or architectural understanding of implemented code, not greenfield design.
+description: Reconstruct or reconcile evidence-backed C4/LikeC4 architecture from existing code. Use for implementation diagrams, scenario or deployment views, and model drift; not greenfield design.
 ---
 
 # Code to C4
@@ -11,7 +11,7 @@ Recover the architecture the repository implements. Produce the same `c4-model.m
 
 - Model observed implementation, not desired architecture.
 - Treat executable or deployable units as containers. A directory, package, or library alone is not a container.
-- Require source evidence for every element and relationship. A dependency declaration alone does not prove a runtime call.
+- Require source evidence for every reconstructed, changed, or shown element and relationship. A dependency declaration alone does not prove a runtime call.
 - Mark material interpretation as `inferred`; never present it as observed fact.
 - Ignore vendored, generated, fixture, example, and test code unless the user includes it.
 - Stop at C4 Component. Do not turn classes or files into diagram nodes.
@@ -20,11 +20,23 @@ Recover the architecture the repository implements. Produce the same `c4-model.m
 
 ### 1. Establish scope
 
-Read repository instructions first. Locate workspace/build manifests, executable entrypoints, runtime commands, deployment manifests, infrastructure definitions, and existing architecture documentation. Use repository search before asking questions.
+Read repository instructions first. Locate workspace/build manifests, executable entrypoints, runtime commands, deployment manifests, infrastructure definitions, and existing architecture documentation. Find the nearest LikeC4 config, specification, model, and views when present. Use repository search before asking questions.
 
 Ask only when the target system boundary or included applications remains materially ambiguous.
 
-### 2. Discover implementation boundaries
+### 2. Reconcile an existing LikeC4 project
+
+When a LikeC4 project exists, preserve its identifiers, kinds, relationships, file organization, and view conventions. Compare its model with implementation evidence before adding views.
+
+- Report drift between current implementation and modeled intent.
+- Correct drift only when the user requested model/diagram updates or the requested view would otherwise be false.
+- Add an element only for a stable architectural responsibility with its own reason to change.
+- Do not blend current implementation with target architecture when intent is unclear.
+- Use full FQNs across files.
+
+Views select from the model; they must not hide inaccurate elements or relationships.
+
+### 3. Discover implementation boundaries
 
 Build a small evidence inventory:
 
@@ -35,7 +47,7 @@ Build a small evidence inventory:
 
 Prefer runtime and deployment evidence over naming conventions. When sources conflict, use the executed/deployed path and record the conflict.
 
-### 3. Trace relationships
+### 4. Trace relationships and scenarios
 
 Record a relationship only when code or runtime configuration supports it:
 
@@ -49,7 +61,9 @@ Record a relationship only when code or runtime configuration supports it:
 
 Use short verb labels describing observed behavior. Record protocol/technology only when visible in code or configuration.
 
-### 4. Produce `c4-model.md`
+For a requested scenario, trace entrypoint to completion. Record step order, source and target responsibilities, operation/event/protocol, and code location. Preserve concurrency and asynchronous boundaries; do not force parallel work into a linear sequence.
+
+### 5. Produce `c4-model.md`
 
 Follow `../c4-modeling/templates/c4-model.md` for System Context, Containers, optional Components, Element Registry, and Relationships. Append:
 
@@ -65,31 +79,56 @@ Follow `../c4-modeling/templates/c4-model.md` for System Context, Containers, op
 
 Rules:
 
-- `model item` is an element ID or `source -> target`.
+- `model item` is an element ID, `source -> target`, or `<view-id>#<step-number>` for a dynamic step.
 - `status` is `observed` or `inferred`.
 - `evidence` uses repository-relative `path:symbol` or `path:line` references.
-- Every Element Registry and Relationships row has at least one evidence row.
+- In a reconstructed `c4-model.md`, every Element Registry and Relationships row has evidence. In an existing project, every corrected or shown item has evidence.
 - Put unresolved but material facts after the table as `Unknown:` bullets. Do not invent nodes to close gaps.
 
-### 5. Generate views
+### 6. Generate focused views
 
 When loaded by `system-design`, continue directly to `../likec4/SKILL.md` after the evidence-backed model is complete.
 
-Default view set:
+Choose each view by the question it answers:
 
-- landscape/context for system boundary and external dependencies
-- container view for executable and deployable units
-- component view only for a user-selected or architecturally important container
+| Question | View |
+| --- | --- |
+| What surrounds the system? | landscape or context view |
+| What runs independently? | container view |
+| What stable responsibilities collaborate inside one container? | scoped component view |
+| How does one implemented scenario execute? | dynamic view |
+| Where do logical elements run? | deployment view |
 
-Add dynamic views only for requested flows backed by a traceable path. Add deployment views only when deployment or infrastructure files support the topology.
+Keep static views scoped to one system, container, or responsibility and its direct collaborators. Do not duplicate model relationships solely for a view.
+
+Create dynamic views only for requested, traceable scenarios. Use one view per independently explainable path. Preserve implemented order, use `parallel` for concurrent work, `<-` for responses, and notes for repeated polling/retries when expanding every iteration adds no value. Split success and failure paths when combining them obscures order.
+
+Create deployment views only when manifests or infrastructure code prove the topology. Map logical elements into named `instanceOf` instances; do not infer regions, nodes, or trust boundaries.
+
+Load `../likec4/references/examples.md` only when choosing view syntax or scenario splits requires examples.
+
+### 7. Validate and inspect
+
+Use the installed runner and the validation contract in `../likec4/SKILL.md`. Repeat `--file` for every edited LikeC4 source. Success requires `filteredErrors: 0`; inspect nonzero `totalErrors` and report unrelated project errors separately.
+
+Export affected views to a temporary directory:
+
+```bash
+<runner> likec4 export png --flat --outdir <temporary-dir> --filter '<view-id-pattern>' <project-dir>
+```
+
+Add `--seq` for dynamic sequence layouts. Inspect every exported image for missing participants, wrong direction/order, ambiguous labels, excessive crossings, unreadable density, and incorrect deployment nesting. Fix selection or layout without changing model truth. If export or image inspection is unavailable, report that visual verification was not completed.
 
 ## Done bar
 
-- Every modeled element and relationship maps to implementation evidence.
+- Every reconstructed, changed, or shown element and relationship maps to implementation evidence.
 - No container exists solely because a similarly named directory exists.
 - Inferred facts and unknowns are visible.
+- Drift is corrected within scope or explicitly reported.
+- Every dynamic step maps to scenario evidence and preserves concurrency.
 - `c4-model.md` satisfies the sibling handoff contract.
 - Generated LikeC4 source passes the validation command required by `../likec4/SKILL.md` for every edited source file.
+- Affected views were rendered and inspected, or missing visual verification was disclosed.
 
 ## Anti-patterns
 
