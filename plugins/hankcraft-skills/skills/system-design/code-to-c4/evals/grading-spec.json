@@ -48,6 +48,19 @@
         "Every edited source validates with filteredErrors equal to zero, and unrelated totalErrors are reported separately.",
         "Affected views are exported and visually inspected, or unavailable visual verification is disclosed."
       ]
+    },
+    {
+      "id": 4,
+      "expected_output": "The response derives a focused deployment view solely from deployment and infrastructure evidence, maps logical elements to named instances, and validates and inspects the result.",
+      "files": [],
+      "expectations": [
+        "Deployment nodes, environments, regions, zones, and trust boundaries appear only when supported by manifests or infrastructure code.",
+        "Logical containers, databases, and queues map to named instanceOf instances.",
+        "Package directories are not modeled as deployment nodes.",
+        "Every shown deployment element has repository-relative evidence.",
+        "The edited LikeC4 sources validate with filteredErrors equal to zero.",
+        "The rendered deployment view is inspected, or unavailable visual verification is disclosed."
+      ]
     }
   ]
 }

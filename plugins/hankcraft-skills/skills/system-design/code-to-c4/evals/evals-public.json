@@ -22,6 +22,11 @@
       "id": 3,
       "prompt": "The existing LikeC4 model and views may have drifted from this implementation. Reconcile only what is needed, add a focused view for the current behavior, and verify the rendered result.",
       "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Create a LikeC4 deployment view for this application's production environment using its deployment manifests and infrastructure code. Do not infer resources that are not implemented.",
+      "files": []
     }
   ]
 }

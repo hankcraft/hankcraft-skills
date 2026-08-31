@@ -1,11 +1,22 @@
 ---
 name: code-to-c4
-description: Reconstruct or reconcile evidence-backed C4/LikeC4 architecture from existing code. Use for implementation diagrams, scenario or deployment views, and model drift; not greenfield design.
+description: Derive evidence-backed C4/LikeC4 static, dynamic, and deployment views from existing code, or correct model drift found during tracing. Not for greenfield design or code-inventory diagrams.
 ---
 
 # Code to C4
 
 Recover the architecture the repository implements. Produce the same `c4-model.md` contract as `../c4-modeling/SKILL.md`, then hand it to `../likec4/SKILL.md` for diagrams.
+
+## Use when
+
+Use this skill when a repository needs:
+
+- static C4 views aligned with current responsibilities
+- focused sequence views for implemented scenarios
+- deployment views backed by manifests or infrastructure code
+- correction of architecture-model drift discovered during tracing
+
+Deliberately avoid file/function diagrams, speculative components, and one giant sequence containing every path.
 
 ## Boundaries
 
@@ -14,7 +25,7 @@ Recover the architecture the repository implements. Produce the same `c4-model.m
 - Require source evidence for every reconstructed, changed, or shown element and relationship. A dependency declaration alone does not prove a runtime call.
 - Mark material interpretation as `inferred`; never present it as observed fact.
 - Ignore vendored, generated, fixture, example, and test code unless the user includes it.
-- Stop at C4 Component. Do not turn classes or files into diagram nodes.
+- Stop at C4 Component.
 
 ## Workflow
 
