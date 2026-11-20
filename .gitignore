@@ -20,3 +20,6 @@ htmlcov/
 
 # Evaluation output
 transcript_*.jsonl
+
+# graft's local graph cache — regenerable, not committed (run `graft build`).
+/graft/
