@@ -57,6 +57,7 @@ Published skills use `SKILL.md` under `plugins/hankcraft-skills/skills/`. See [M
 - `hono-backend` — Build and maintain production Hono backends.
 - `bun-toolchain` — Configure Bun TypeScript projects with Oxlint, Oxfmt, and Lefthook.
 - `gcp-terraform` — Manage GCP infrastructure with Terraform in Bun monorepos.
+- [`git-squash`](plugins/hankcraft-skills/skills/git-squash/SKILL.md) — Rewrite a feature branch into atomic commits. Keep OpenSpec planning separate and check off each task with its implementation.
 
 ## Validate
 
@@ -75,6 +76,8 @@ uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/bun-toolchain
 uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/gcp-terraform
+uvx --from skills-ref==0.1.0 agentskills validate \
+  plugins/hankcraft-skills/skills/git-squash
 claude plugin validate .
 ```
 
