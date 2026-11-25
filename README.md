@@ -58,6 +58,7 @@ Published skills use `SKILL.md` under `plugins/hankcraft-skills/skills/`. See [M
 - `bun-toolchain` — Configure Bun TypeScript projects with Oxlint, Oxfmt, and Lefthook.
 - `gcp-terraform` — Manage GCP infrastructure with Terraform in Bun monorepos.
 - [`git-squash`](plugins/hankcraft-skills/skills/git-squash/SKILL.md) — Rewrite a feature branch into atomic commits. Keep OpenSpec planning separate and check off each task with its implementation.
+- [`create-pr`](plugins/hankcraft-skills/skills/create-pr/SKILL.md) — Draft or open a GitHub pull request or GitLab merge request using the repository template and Traditional Chinese bullets.
 
 ## Validate
 
@@ -78,6 +79,8 @@ uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/gcp-terraform
 uvx --from skills-ref==0.1.0 agentskills validate \
   plugins/hankcraft-skills/skills/git-squash
+uvx --from skills-ref==0.1.0 agentskills validate \
+  plugins/hankcraft-skills/skills/create-pr
 claude plugin validate .
 ```
 
